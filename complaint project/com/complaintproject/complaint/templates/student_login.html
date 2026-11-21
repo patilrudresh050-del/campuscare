@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Login | CampusCare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="cinematic-page">
+<main class="container auth-shell">
+    <section class="auth-story">
+        <a class="brand" href="{% url 'student_login' %}"><span class="brand-mark">C</span> CampusCare</a>
+        <div class="story-copy">
+            <p class="eyebrow">YOUR CAMPUS. YOUR VOICE.</p>
+            <h1>Make campus<br><span>better, together.</span></h1>
+            <p class="story-description">A thoughtful space to raise concerns, follow progress, and help make every corner of campus better.</p>
+        </div>
+        <div class="story-footer"><span class="live-dot"></span> A better campus starts with being heard.</div>
+    </section>
+    <section class="auth-panel">
+        <div class="panel-heading">
+            <p class="eyebrow">STUDENT PORTAL</p>
+            <h2>Welcome back</h2>
+            <p>Sign in to continue to your dashboard.</p>
+        </div>
+        {% if error %}<div class="error"><strong>Unable to sign in.</strong> {{ error }}</div>{% endif %}
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" placeholder="Enter your username" autocomplete="username" required>
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button type="submit" class="primary-action">Sign in <span aria-hidden="true">→</span></button>
+        </form>
+        <div class="auth-links"><span>New to CampusCare? <a href="{% url 'student_register' %}">Create an account</a></span><a href="{% url 'admin_login' %}">Admin access</a></div>
+    </section>
+</main>
+<script src="{% static 'js/3d-motion.js' %}"></script>
+</body>
+</html>

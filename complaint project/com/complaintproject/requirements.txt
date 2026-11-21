@@ -1,0 +1,4 @@
+Django>=5.2,<6
+mysqlclient>=2.2,<3
+opencv-python-headless>=4.10,<5
+python-dotenv>=1.0,<2

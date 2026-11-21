@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Login | CampusCare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="cinematic-page">
+<main class="container auth-shell">
+    <section class="auth-story admin-story">
+        <a class="brand" href="{% url 'admin_login' %}"><span class="brand-mark">C</span> CampusCare <span class="brand-tag">ADMIN</span></a>
+        <div class="story-copy">
+            <p class="eyebrow">CAMPUS OPERATIONS</p>
+            <h1>Every concern<br><span>moves us forward.</span></h1>
+            <p class="story-description">A clear view of campus feedback, with the tools to respond thoughtfully and keep progress moving.</p>
+        </div>
+        <div class="story-footer"><span class="live-dot"></span> Secure administrator workspace</div>
+    </section>
+    <section class="auth-panel">
+        <div class="panel-heading">
+            <p class="eyebrow">ADMINISTRATOR PORTAL</p>
+            <h2>Sign in</h2>
+            <p>Access the campus response dashboard.</p>
+        </div>
+        {% if error %}<div class="error"><strong>Unable to sign in.</strong> {{ error }}</div>{% endif %}
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" placeholder="Administrator username" autocomplete="username" required>
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button type="submit" class="primary-action">Open dashboard <span aria-hidden="true">→</span></button>
+        </form>
+        <div class="auth-links"><a href="{% url 'student_login' %}">← Back to student login</a><span class="secure-note">Protected workspace</span></div>
+    </section>
+</main>
+<script src="{% static 'js/3d-motion.js' %}"></script>
+</body>
+</html>

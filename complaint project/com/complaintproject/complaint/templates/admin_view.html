@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Review Complaint | CampusCare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="cinematic-page dashboard-page">
+<main class="container dashboard-shell">
+    <header class="dashboard-topbar">
+        <a class="brand" href="{% url 'admin_dashboard' %}"><span class="brand-mark">C</span> CampusCare <span class="brand-tag">ADMIN</span></a>
+        <div class="topbar-right"><a class="quiet-link" href="{% url 'admin_dashboard' %}">← All complaints</a><a class="quiet-link" href="{% url 'admin_logout' %}">Sign out <span aria-hidden="true">↗</span></a></div>
+    </header>
+    <section class="dashboard-hero detail-hero admin-detail-hero">
+        <div><p class="eyebrow">CAMPUS OPERATIONS <span class="eyebrow-line"></span> REVIEW</p><h1>Understand it.<br><span>Move it forward.</span></h1><p class="dashboard-subtitle">Review the report and update its status.</p></div>
+        <span class="status-pill status-{{ complaint.status|lower }}">{{ complaint.status }}</span>
+    </section>
+    <section class="dashboard-content">
+        <article class="detail-card">
+            <div class="detail-title-row"><div><p class="eyebrow">COMPLAINT TITLE</p><h2>{{ complaint.title }}</h2></div><span class="detail-category">{{ complaint.category }}</span></div>
+            <div class="detail-meta"><span><span class="meta-label">SUBMITTED BY</span>{{ complaint.student.username }}</span><span><span class="meta-label">CATEGORY</span>{{ complaint.category }}</span></div>
+            <div class="detail-divider"></div>
+            <p class="eyebrow">DESCRIPTION</p>
+            <p class="detail-description">{{ complaint.description|linebreaksbr }}</p>
+            {% if complaint.image %}
+            <div class="detail-divider"></div>
+            <p class="eyebrow">PROBLEM PHOTO</p>
+            <img class="complaint-photo" src="{{ complaint.image.url }}" alt="Photo attached to {{ complaint.title }}">
+            {% endif %}
+            <div class="detail-actions">
+                <a class="quiet-link" href="{% url 'admin_dashboard' %}">← Back to complaints</a>
+                {% if complaint.status == "Pending" %}
+                <div class="review-actions">
+                    <a class="review-button review-reject" href="{% url 'reject_complaint' complaint.id %}">Reject</a>
+                    <a class="primary-action" href="{% url 'approve_complaint' complaint.id %}">Approve complaint <span aria-hidden="true">→</span></a>
+                </div>
+                {% endif %}
+            </div>
+        </article>
+    </section>
+</main>
+<script src="{% static 'js/3d-motion.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Account | CampusCare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="cinematic-page">
+<main class="container auth-shell">
+    <section class="auth-story">
+        <a class="brand" href="{% url 'student_login' %}"><span class="brand-mark">C</span> CampusCare</a>
+        <div class="story-copy">
+            <p class="eyebrow">YOUR CAMPUS. YOUR VOICE.</p>
+            <h1>Small actions.<br><span>Real change.</span></h1>
+            <p class="story-description">Join your campus community and help make everyday life better for everyone.</p>
+        </div>
+        <div class="story-footer"><span class="live-dot"></span> Your voice belongs here.</div>
+    </section>
+    <section class="auth-panel">
+        <div class="panel-heading">
+            <p class="eyebrow">STUDENT PORTAL</p>
+            <h2>Create your account</h2>
+            <p>Get started with your campus community.</p>
+        </div>
+        {% if error %}<div class="error"><strong>Could not create account.</strong> {{ error }}</div>{% endif %}
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" placeholder="Choose a username" autocomplete="username" required>
+            <label for="email">Email address</label>
+            <input id="email" type="email" name="email" placeholder="you@campus.edu" autocomplete="email" required>
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+            <button type="submit" class="primary-action">Create account <span aria-hidden="true">→</span></button>
+        </form>
+        <div class="auth-links"><span>Already a member? <a href="{% url 'student_login' %}">Sign in</a></span><a href="{% url 'admin_login' %}">Admin access</a></div>
+    </section>
+</main>
+<script src="{% static 'js/3d-motion.js' %}"></script>
+</body>
+</html>

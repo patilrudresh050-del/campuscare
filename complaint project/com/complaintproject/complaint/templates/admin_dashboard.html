@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard | CampusCare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="cinematic-page dashboard-page">
+<main class="container dashboard-shell">
+    <header class="dashboard-topbar">
+        <a class="brand" href="{% url 'admin_dashboard' %}"><span class="brand-mark">C</span> CampusCare <span class="brand-tag">ADMIN</span></a>
+        <div class="topbar-right"><span class="user-chip"><span class="user-avatar">A</span>Administrator</span><a class="quiet-link" href="{% url 'admin_logout' %}">Sign out <span aria-hidden="true">↗</span></a></div>
+    </header>
+    <section class="dashboard-hero admin-dashboard-hero">
+        <div><p class="eyebrow">CAMPUS OPERATIONS <span class="eyebrow-line"></span> OVERVIEW</p><h1>Listen closely.<br><span>Move things forward.</span></h1><p class="dashboard-subtitle">Review campus feedback and keep every response moving.</p></div>
+        <div class="hero-count"><span class="count-label">TOTAL SUBMISSIONS</span><strong>{{ complaints|length|stringformat:"02d" }}</strong><span>from your campus</span></div>
+    </section>
+    <section class="dashboard-content">
+        <div class="section-heading"><div><p class="eyebrow">STUDENT FEEDBACK</p><h2>All complaints</h2></div></div>
+        {% if complaints %}
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>COMPLAINT</th><th>SUBMITTED BY</th><th>STATUS</th><th class="actions-heading">DETAILS</th></tr></thead>
+                <tbody>
+                {% for c in complaints %}
+                <tr>
+                    <td><span class="complaint-title">{{ c.title }}</span><span class="complaint-category">{{ c.category }}</span></td>
+                    <td><span class="student-name"><span class="student-dot"></span>{{ c.student.username }}</span></td>
+                    <td><span class="status-pill status-{{ c.status|lower }}">{{ c.status }}</span></td>
+                    <td class="action-cell"><a class="table-action" href="{% url 'admin_view' c.id %}">Review <span aria-hidden="true">↗</span></a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state"><span class="empty-icon">✳</span><h3>All quiet for now.</h3><p>New student submissions will appear here as they come in.</p></div>
+        {% endif %}
+    </section>
+</main>
+<script src="{% static 'js/3d-motion.js' %}"></script>
+</body>
+</html>

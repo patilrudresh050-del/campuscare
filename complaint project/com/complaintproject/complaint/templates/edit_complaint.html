@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Complaint | CampusCare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="cinematic-page dashboard-page">
+<main class="container dashboard-shell">
+    <header class="dashboard-topbar">
+        <a class="brand" href="{% url 'student_dashboard' %}"><span class="brand-mark">C</span> CampusCare</a>
+        <div class="topbar-right"><a class="quiet-link" href="{% url 'student_dashboard' %}">← Dashboard</a><a class="quiet-link" href="{% url 'student_logout' %}">Sign out <span aria-hidden="true">↗</span></a></div>
+    </header>
+    <section class="dashboard-hero detail-hero">
+        <div><p class="eyebrow">STUDENT PORTAL <span class="eyebrow-line"></span> UPDATE</p><h1>Make it<br><span>clearer.</span></h1><p class="dashboard-subtitle">Update your complaint details while it is still pending.</p></div>
+    </section>
+    <section class="dashboard-content">
+        <div class="editor-panel">
+            <div class="editor-heading"><div><p class="eyebrow">COMPLAINT DETAILS</p><h2>Edit submission</h2></div><span class="status-pill status-{{ complaint.status|lower }}">{{ complaint.status }}</span></div>
+            <form method="post" class="editor-form">
+                {% csrf_token %}
+                <label for="title">Title</label>
+                <input id="title" type="text" name="title" value="{{ complaint.title }}" maxlength="200" required>
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="Lab" {% if complaint.category == "Lab" %}selected{% endif %}>Lab</option>
+                    <option value="Hostel" {% if complaint.category == "Hostel" %}selected{% endif %}>Hostel</option>
+                    <option value="Classroom" {% if complaint.category == "Classroom" %}selected{% endif %}>Classroom</option>
+                    <option value="Library" {% if complaint.category == "Library" %}selected{% endif %}>Library</option>
+                </select>
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="6" required>{{ complaint.description }}</textarea>
+                <div class="editor-actions"><a class="quiet-link" href="{% url 'student_view' complaint.id %}">Cancel</a><button type="submit" class="primary-action">Save changes <span aria-hidden="true">→</span></button></div>
+            </form>
+        </div>
+    </section>
+</main>
+<script src="{% static 'js/3d-motion.js' %}"></script>
+</body>
+</html>

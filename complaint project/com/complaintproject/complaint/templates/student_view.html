@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Complaint Details | CampusCare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="cinematic-page dashboard-page">
+<main class="container dashboard-shell">
+    <header class="dashboard-topbar">
+        <a class="brand" href="{% url 'student_dashboard' %}"><span class="brand-mark">C</span> CampusCare</a>
+        <div class="topbar-right"><span class="user-chip"><span class="user-avatar">{{ user.username|first|upper }}</span>{{ user.username }}</span><a class="quiet-link" href="{% url 'student_logout' %}">Sign out <span aria-hidden="true">↗</span></a></div>
+    </header>
+    <section class="dashboard-hero detail-hero">
+        <div><p class="eyebrow">STUDENT PORTAL <span class="eyebrow-line"></span> COMPLAINT</p><h1>Submission<br><span>details.</span></h1><p class="dashboard-subtitle">Follow the latest status of your campus feedback.</p></div>
+        <span class="status-pill status-{{ complaint.status|lower }}">{{ complaint.status }}</span>
+    </section>
+    <section class="dashboard-content">
+        <article class="detail-card">
+            <div class="detail-title-row"><div><p class="eyebrow">COMPLAINT TITLE</p><h2>{{ complaint.title }}</h2></div><span class="detail-category">{{ complaint.category }}</span></div>
+            <div class="detail-divider"></div>
+            <p class="eyebrow">DESCRIPTION</p>
+            <p class="detail-description">{{ complaint.description|linebreaksbr }}</p>
+            {% if complaint.image %}
+            <div class="detail-divider"></div>
+            <p class="eyebrow">PROBLEM PHOTO</p>
+            <img class="complaint-photo" src="{{ complaint.image.url }}" alt="Photo attached to {{ complaint.title }}">
+            {% endif %}
+            <div class="detail-actions">
+                <a class="quiet-link" href="{% url 'student_dashboard' %}">← Back to dashboard</a>
+                {% if complaint.status == "Pending" %}<a class="primary-action" href="{% url 'edit_complaint' complaint.id %}">Edit complaint <span aria-hidden="true">→</span></a>{% endif %}
+            </div>
+        </article>
+    </section>
+</main>
+<script src="{% static 'js/3d-motion.js' %}"></script>
+</body>
+</html>

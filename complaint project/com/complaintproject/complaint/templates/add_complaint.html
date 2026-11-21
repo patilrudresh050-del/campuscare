@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New Complaint | CampusCare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="cinematic-page dashboard-page">
+<main class="container dashboard-shell">
+    <header class="dashboard-topbar">
+        <a class="brand" href="{% url 'student_dashboard' %}"><span class="brand-mark">C</span> CampusCare</a>
+        <div class="topbar-right"><a class="quiet-link" href="{% url 'student_dashboard' %}">← Dashboard</a><a class="quiet-link" href="{% url 'student_logout' %}">Sign out <span aria-hidden="true">↗</span></a></div>
+    </header>
+    <section class="dashboard-hero detail-hero">
+        <div><p class="eyebrow">STUDENT PORTAL <span class="eyebrow-line"></span> NEW SUBMISSION</p><h1>Tell us what<br><span>needs attention.</span></h1><p class="dashboard-subtitle">Share the details so the right team can take a closer look.</p></div>
+    </section>
+    <section class="dashboard-content">
+        <div class="editor-panel">
+            <div class="editor-heading"><div><p class="eyebrow">COMPLAINT DETAILS</p><h2>New complaint</h2></div><span class="status-pill status-pending">New submission</span></div>
+            <form method="post" enctype="multipart/form-data" class="editor-form">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <label for="title">Title</label>
+                <input id="title" type="text" name="title" value="{{ form.title.value|default_if_none:'' }}" placeholder="Give your concern a clear title" maxlength="200" required>
+                {{ form.title.errors }}
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="Lab" {% if form.category.value == "Lab" %}selected{% endif %}>Lab</option>
+                    <option value="Hostel" {% if form.category.value == "Hostel" %}selected{% endif %}>Hostel</option>
+                    <option value="Classroom" {% if form.category.value == "Classroom" %}selected{% endif %}>Classroom</option>
+                    <option value="Library" {% if form.category.value == "Library" %}selected{% endif %}>Library</option>
+                </select>
+                {{ form.category.errors }}
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="6" placeholder="Describe what happened and where..." required>{{ form.description.value|default_if_none:'' }}</textarea>
+                {{ form.description.errors }}
+                <label for="image">Problem photo (optional)</label>
+                <input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp">
+                <p class="form-help">JPG, PNG, or WebP. Photos are optimized with OpenCV before saving.</p>
+                {{ form.image.errors }}
+                <div class="editor-actions"><a class="quiet-link" href="{% url 'student_dashboard' %}">Cancel</a><button type="submit" class="primary-action">Submit complaint <span aria-hidden="true">→</span></button></div>
+            </form>
+        </div>
+    </section>
+</main>
+<script src="{% static 'js/3d-motion.js' %}"></script>
+</body>
+</html>
